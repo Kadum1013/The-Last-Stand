@@ -8,6 +8,7 @@ public class Bow : MonoBehaviour
 
     // Cache to hold current Arrow that is loaded.
     Arrow currentArrow;
+
     private void Start()
     {
         // At the start, spawn an arrow.

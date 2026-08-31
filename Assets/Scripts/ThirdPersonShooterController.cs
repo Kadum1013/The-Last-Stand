@@ -8,10 +8,11 @@ public class ThirdPersonShooterController : MonoBehaviour
     [SerializeField] CharacterRotation characterRotation;
     [SerializeField] float normalSensitivity;
     [SerializeField] float aimSensitivity;
+    [SerializeField] bool isAiming;
 
     private void Update()
     {
-        if(PlayerInput.instance.IsAiming)
+        if(isAiming)
         {
             aimVirtualCamera.gameObject.SetActive(true);
             characterRotation.SetIsAiming(aimSensitivity, true);

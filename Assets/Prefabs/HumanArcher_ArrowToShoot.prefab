@@ -49,8 +49,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arrow
   rigidbody: {fileID: 7008499469555015816}
-  speed: 50
+  speed: 100
   upForce: 0.01
+  detectionRadius: 10
 --- !u!54 &7008499469555015816
 Rigidbody:
   m_ObjectHideFlags: 0

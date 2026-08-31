@@ -12,6 +12,7 @@ public class CharacterRotation : MonoBehaviour
     [SerializeField] LayerMask layerMask;
     [SerializeField] Transform debugTransform;
     [SerializeField] Animator animator;
+    [SerializeField] PlayerAttack playerAttack;
 
     [Header("Player")]
     [Tooltip("Input system")]
@@ -120,6 +121,7 @@ public class CharacterRotation : MonoBehaviour
             Vector3 aimDir = (worldAimTarget - transform.position).normalized;
 
             transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 20f);
+            playerAttack.SetLookAtDirection(mouseWorldPosition.normalized);
         }
     }
 
