@@ -25,10 +25,7 @@ public class CharacterMovement : MonoBehaviour
 
         controller.Move((movement + forceReceiver.Movement) * Time.deltaTime);
 
-        if (controller.velocity != Vector3.zero)
-        {
-            characterRotation.UpdateCharacterRotation();
-        }
+        
     }
 
     protected Vector3 CalculateMovement()

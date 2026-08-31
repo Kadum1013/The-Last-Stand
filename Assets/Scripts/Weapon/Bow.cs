@@ -15,6 +15,7 @@ public class Bow : MonoBehaviour
     }
     public void SpawnArrow()
     {
+        currentArrow = null;
         // Creates arrow and attaches it to the bow
         currentArrow = Instantiate(arrowPrefab, spawnArrowPos.position, spawnArrowPos.rotation, spawnArrowPos);
     }
@@ -26,10 +27,7 @@ public class Bow : MonoBehaviour
             // Detache it from the bow gameobject.
             currentArrow.transform.SetParent(null);
 
-            currentArrow.ShootArrow(transform.forward);
-
-            // Destory arrow after 5 seconds.
-            Destroy(currentArrow.gameObject, 5f);
+            currentArrow.ShootArrow();
 
             SpawnArrow();
         }

@@ -11,10 +11,18 @@ public class Arrow : MonoBehaviour
         rigidbody.useGravity = false;
     }
 
-    public void ShootArrow(Vector3 direction)
+    private void OnTriggerEnter(Collider other)
     {
-        direction.y += upForce;
-        rigidbody.AddForce(direction * speed, ForceMode.Impulse);
+        rigidbody.useGravity = false;
+        rigidbody.angularVelocity = Vector3.zero;
+        rigidbody.linearVelocity = Vector3.zero;
+    }
+    public void ShootArrow()
+    {
+        Vector3 dir = transform.forward;
+        dir.y += upForce;
+        rigidbody.AddForce(dir * speed, ForceMode.Impulse);
         rigidbody.useGravity = true;
+        Destroy(gameObject, 5f);
     }
 }
