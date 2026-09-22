@@ -1,4 +1,4 @@
-using System;
+
 using UnityEngine;
 
 public class PlayerInput : MonoBehaviour, InputSystem.IPlayerActions
@@ -11,6 +11,7 @@ public class PlayerInput : MonoBehaviour, InputSystem.IPlayerActions
     InputSystem inputSystem;
     public static PlayerInput instance;
 
+    [SerializeField] bool testAiming;
     private void Awake()
     {
         if(instance == null)
@@ -23,6 +24,14 @@ public class PlayerInput : MonoBehaviour, InputSystem.IPlayerActions
         }
 
         IsAiming = false;
+    }
+
+    private void Update()
+    {
+        if (testAiming)
+        {
+            IsAiming = true;
+        }
     }
 
     private void OnEnable()

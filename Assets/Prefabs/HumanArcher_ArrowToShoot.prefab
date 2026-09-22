@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7912138013405447582}
-  - component: {fileID: 3518262680168322483}
-  - component: {fileID: 7008499469555015816}
-  - component: {fileID: -4943578530507632489}
-  m_Layer: 7
+  - component: {fileID: 1012241047593285218}
+  - component: {fileID: 6811209702645143569}
+  - component: {fileID: -3849039186527687150}
+  m_Layer: 0
   m_Name: HumanArcher_ArrowToShoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ Transform:
   - {fileID: 8080520172707470241}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3518262680168322483
+--- !u!114 &1012241047593285218
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,11 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f87354e0baf06c4380784949881c7c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arrow
-  rigidbody: {fileID: 7008499469555015816}
+  rigidbody: {fileID: 6811209702645143569}
   speed: 100
   upForce: 0.01
-  detectionRadius: 10
---- !u!54 &7008499469555015816
+--- !u!54 &6811209702645143569
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,12 +73,12 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 2
---- !u!65 &-4943578530507632489
+  m_CollisionDetection: 0
+--- !u!65 &-3849039186527687150
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,8 +97,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.1, y: 0.1, z: 0.85}
-  m_Center: {x: 0, y: 0, z: 0.6}
+  m_Size: {x: 0.11333963, y: 0.09913015, z: 1.0596787}
+  m_Center: {x: 0.00000010430813, y: 0.0014208555, z: 0.50727195}
 --- !u!1 &3282057183928493575
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8080520172707470241}
   - component: {fileID: 1366742610318559982}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: ArrowTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +261,7 @@ GameObject:
   - component: {fileID: 2560732536650677107}
   - component: {fileID: 629435879993804070}
   - component: {fileID: 8964845083528079686}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: ArrowMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

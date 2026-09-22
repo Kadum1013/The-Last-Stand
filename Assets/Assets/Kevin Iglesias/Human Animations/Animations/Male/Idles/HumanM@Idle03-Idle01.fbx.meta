@@ -17,19 +17,7 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Untitled' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'B-indexFinger01.R' has scale animation
-      that will be discarded.\n\t'B-indexFinger03.R' has scale animation that will
-      be discarded.\n\t'B-middleFinger03.R' has scale animation that will be discarded.\n\t'B-ringFinger01.R'
-      has scale animation that will be discarded.\n\t'B-ringFinger03.R' has scale
-      animation that will be discarded.\n\t'B-pinky01.R' has scale animation that
-      will be discarded.\n\t'B-pinky03.R' has scale animation that will be discarded.\n\t'B-thumb01.R'
-      has scale animation that will be discarded.\n\t'B-indexFinger03.L' has scale
-      animation that will be discarded.\n\t'B-ringFinger01.L' has scale animation
-      that will be discarded.\n\t'B-pinky01.L' has scale animation that will be discarded.\n\t'B-thumb01.L'
-      has scale animation that will be discarded.\n\t'B-thumb03.L' has scale animation
-      that will be discarded.\n"
+    animationImportWarnings: "\nClip 'Untitled' has import animation warnings that might lower retargeting quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'B-indexFinger01.R' has scale animation that will be discarded.\n\t'B-indexFinger03.R' has scale animation that will be discarded.\n\t'B-middleFinger03.R' has scale animation that will be discarded.\n\t'B-ringFinger01.R' has scale animation that will be discarded.\n\t'B-ringFinger03.R' has scale animation that will be discarded.\n\t'B-pinky01.R' has scale animation that will be discarded.\n\t'B-pinky03.R' has scale animation that will be discarded.\n\t'B-thumb01.R' has scale animation that will be discarded.\n\t'B-indexFinger03.L' has scale animation that will be discarded.\n\t'B-ringFinger01.L' has scale animation that will be discarded.\n\t'B-pinky01.L' has scale animation that will be discarded.\n\t'B-thumb01.L' has scale animation that will be discarded.\n\t'B-thumb03.L' has scale animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -963,8 +951,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 2faa610713d3b3c439473daa55e8c60a,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 2faa610713d3b3c439473daa55e8c60a, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
@@ -981,5 +968,5 @@ AssetOrigin:
   productId: 335880
   packageName: Human Archer Animations FREE
   packageVersion: 1.0
-  assetPath: Assets/Kevin Iglesias/Human Animations/Animations/Male/Idles/HumanM@Idle03-Idle01.fbx
+  assetPath: Assets/Assets/Kevin Iglesias/Human Animations/Animations/Male/Idles/HumanM@Idle03-Idle01.fbx
   uploadId: 825246

@@ -92,7 +92,7 @@ namespace KevinIglesias
         {
             if(!bowstringLine || !tip01 || !tip02 || !nockPoint)
             {
-                return;
+                Debug.LogError("Missing Bow INFO!"); return;
             }
             
             bowstringLine.positionCount = 3;

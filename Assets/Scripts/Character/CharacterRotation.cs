@@ -3,53 +3,27 @@ using UnityEngine;
 
 public class CharacterRotation : MonoBehaviour
 {
-    // cinemachine
-    private float _cinemachineTargetYaw;
-    private float _cinemachineTargetPitch;
-
-
-    
+    [Tooltip(" The LayerMask Ray cast will hit.")]
     [SerializeField] LayerMask layerMask;
-    [SerializeField] Transform debugTransform;
-    [SerializeField] Animator animator;
-    [SerializeField] PlayerAttack playerAttack;
 
-    [Header("Player")]
-    [Tooltip("Input system")]
-    [SerializeField] PlayerInput playerInput;
+    [Tooltip("The Transform the camera and player will look at")]
+    [SerializeField] Transform targetLookAtTransform;
 
-    // Sensitivity is set from thridpersoncontroller, when aiming and not aiming.
-    private float sensitivity = 1f;
-
-
-    [Header("Camera")]
     [Tooltip("Main camera")]
     [SerializeField] Camera mainCamera;
-    [Tooltip("The Transform the Camera will look at and follow.")]
-    [SerializeField] GameObject CinemachineCameraTarget;
+
     [Tooltip("Spped at which you rotate")]
     [SerializeField] float turnSpeed = 15f;
-    [Tooltip("Stance offset while aiming")]
-    [SerializeField] float aimSideAngle = 90f; // stance offset while aiming
+
     [Tooltip("If player is aiming or not")]
     [SerializeField] bool isAiming;
-    [Tooltip("If the player is using a keyboard and mouse")]
-    [SerializeField] bool IsCurrentDeviceMouse;
-    [Tooltip("Lock cameras rotation")]
-    [SerializeField] public bool LockCameraPosition = false;
-    [Tooltip("Override the cameras angle position")]
-    [SerializeField] float CameraAngleOverride = 0.0f;
-    [Tooltip("Bottom cameras clamp")]
-    [SerializeField] float BottomClamp = -30.0f;
-    [Tooltip("Top cameras clamp")]
-    [SerializeField] float TopClamp = 70.0f;
-
-    private const float _threshold = 0.01f;
-
-    private void Start()
+    
+    // Set the character to aiming.
+    public void SetIsAiming(bool aiming)
     {
-        _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
+        isAiming = aiming;
     }
+
 
     void Update()
     {
@@ -66,42 +40,10 @@ public class CharacterRotation : MonoBehaviour
 
         if (camForward.sqrMagnitude > 0.001f)
         {
-            float sideOffset = isAiming ? aimSideAngle : 0f;
-            Quaternion targetRot = Quaternion.LookRotation(camForward) * Quaternion.Euler(0f, sideOffset, 0f);
+            Quaternion targetRot = Quaternion.LookRotation(camForward);
 
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * turnSpeed);
         }
-    }
-
-    private void LateUpdate()
-    {
-        CameraRotation();
-    }
-    private void CameraRotation()
-    {
-        // if there is an input and camera position is not fixed
-        if (playerInput.MousePosition.sqrMagnitude >= _threshold && !LockCameraPosition)
-        {
-            //Don't multiply mouse input by Time.deltaTime;
-            float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
-
-            _cinemachineTargetYaw += playerInput.MousePosition.x * deltaTimeMultiplier * sensitivity;
-            _cinemachineTargetPitch -= playerInput.MousePosition.y * deltaTimeMultiplier * sensitivity;
-        }
-
-        // clamp our rotations so our values are limited 360 degrees
-        _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
-        _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
-
-        // Cinemachine will follow this target
-        CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride,
-            _cinemachineTargetYaw, 0.0f);
-    }
-    private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
-    {
-        if (lfAngle < -360f) lfAngle += 360f;
-        if (lfAngle > 360f) lfAngle -= 360f;
-        return Mathf.Clamp(lfAngle, lfMin, lfMax);
     }
     private void LookAtTarget()
     {
@@ -110,7 +52,7 @@ public class CharacterRotation : MonoBehaviour
         Ray ray = mainCamera.ScreenPointToRay(screenCenterPoint);
         if (Physics.Raycast(ray, out RaycastHit hitInfo, float.MaxValue, layerMask))
         {
-            debugTransform.position = hitInfo.point;
+            targetLookAtTransform.position = hitInfo.point;
             mouseWorldPosition = hitInfo.point;
         }
 
@@ -121,14 +63,8 @@ public class CharacterRotation : MonoBehaviour
             Vector3 aimDir = (worldAimTarget - transform.position).normalized;
 
             transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 20f);
-            playerAttack.SetLookAtDirection(mouseWorldPosition.normalized);
         }
     }
 
-    public void SetIsAiming(float newSensitivity, bool aiming)
-    {
-        animator.SetBool("isAiming", aiming);
-        isAiming = aiming;
-        sensitivity = newSensitivity;
-    }
+
 }

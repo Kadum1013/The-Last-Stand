@@ -1,35 +1,31 @@
 using UnityEngine;
 
-
 [RequireComponent(typeof(CharacterController))]
 public class CharacterMovement : MonoBehaviour
 {
     [SerializeField] CharacterController controller;
     [SerializeField] PlayerInput input;
     [SerializeField] ForceReceiver forceReceiver;
-    [SerializeField] CharacterRotation characterRotation;
     [SerializeField] Camera camera;
-    [SerializeField] Animator animator;
-    [SerializeField] float movementSpeed = 10;
+    [SerializeField] CharacterAnimationController animator;
 
+    public bool CheckIfCharacterIsMoving() { return isCharacterMoving; }
+    [SerializeField] bool isCharacterMoving;
     private void Update()
     {
-        Vector3 move = CalculateMovement();
-        Move(move, movementSpeed);
         UpdateAnimationMovement();
     }
 
-    public void Move(Vector3 motion, float movementSpeed)
+    public void Move(float movementSpeed)
     {
-        Vector3 movement = motion  * movementSpeed;
+        Vector3 movement = CalculateMovement() * movementSpeed;
 
         controller.Move((movement + forceReceiver.Movement) * Time.deltaTime);
-
-        
     }
 
     protected Vector3 CalculateMovement()
     {
+
         Vector3 foward = camera.transform.forward;
         Vector3 right = camera.transform.right;
 
@@ -49,8 +45,10 @@ public class CharacterMovement : MonoBehaviour
 
         float moveX = input.MovementValue.x;
         float moveZ = input.MovementValue.y;
-        animator.SetFloat("move X", moveX);
-        animator.SetFloat("move Y", moveZ);
+        animator.UpdateAnimationMovement(moveX, moveZ);
+
+        // Checks if character is moving.
+        isCharacterMoving = moveX > 0f || moveZ > 0f || moveX < 0f || moveZ < 0f;
     }
 
 }

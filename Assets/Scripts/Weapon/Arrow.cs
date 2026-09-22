@@ -6,8 +6,6 @@ public class Arrow : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float upForce;
 
-    [SerializeField] float detectionRadius = 10f;
-    
 
     public void Start()
     {
@@ -34,6 +32,7 @@ public class Arrow : MonoBehaviour
         dir.y += upForce;
 
         rigidbody.useGravity = true;
+
         rigidbody.AddForce(dir * speed, ForceMode.Impulse);
 
         transform.rotation = Quaternion.LookRotation(dir.normalized);
@@ -41,7 +40,8 @@ public class Arrow : MonoBehaviour
         Destroy(gameObject, 5f);
     }
 
-    private void OnDrawGizmosSelected()
+    // Test to make sure the arrows is pointing in the right direction.
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
 
