@@ -366,7 +366,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RigController
   aimRig: {fileID: 8331908779596647522}
   nonAimRig: {fileID: 695721183}
-  rightArmAimIK: {fileID: 7209417318248660114}
+  aimConstraints:
+  - {fileID: 2091371497}
+  - {fileID: 7777540624550396546}
+  - {fileID: 7900990852998365554}
+  rightArmAimIK: {fileID: 1822804705}
   rightArmNonAimIK: {fileID: 763085996}
   time: 2.8
 --- !u!1 &330585543
@@ -457,7 +461,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.247, y: 2.86, z: -2.26}
+  m_LocalPosition: {x: 0.017, y: 3.3, z: -2.8400002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1060,13 +1064,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 446899926}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.46780092, y: 0.3470813, z: 0.008058785, w: 0.8127927}
-  m_LocalPosition: {x: 28.7, y: 0.8, z: 15.7}
+  m_LocalRotation: {x: -0.21413337, y: 0.030185675, z: 0.25104377, w: 0.9435109}
+  m_LocalPosition: {x: 13.8, y: 2.7, z: -4.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 383003118}
-  m_LocalEulerAnglesHint: {x: -50, y: 60, z: -29}
+  m_LocalEulerAnglesHint: {x: -24.786, y: -3.192, z: 30.501}
 --- !u!1 &477239931
 GameObject:
   m_ObjectHideFlags: 0
@@ -1258,7 +1262,7 @@ GameObject:
   - component: {fileID: 763085995}
   - component: {fileID: 763085996}
   m_Layer: 0
-  m_Name: Right Arm
+  m_Name: Right Arm Non Aim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1568,10 +1572,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineThirdPersonFollow
   Damping: {x: 0, y: 0.5, z: 0}
-  ShoulderOffset: {x: 1.23, y: -0.67, z: 0.38}
+  ShoulderOffset: {x: 0, y: -0.23, z: 0}
   VerticalArmLength: 1.2
-  CameraSide: 1
-  CameraDistance: 2.7
+  CameraSide: 0
+  CameraDistance: 2.9
   AvoidObstacles:
     Enabled: 0
     CollisionFilter:
@@ -1633,7 +1637,7 @@ Transform:
   m_GameObject: {fileID: 1029095883}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.247, y: 2.86, z: -2.26}
+  m_LocalPosition: {x: 0.017, y: 3.3, z: -2.8400002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2507,13 +2511,69 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1784580608}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.23194645, y: -0.6130731, z: -0.30639255, w: 0.69026506}
-  m_LocalPosition: {x: 0.35799965, y: 0.0019999777, z: -0.0030000547}
+  m_LocalRotation: {x: 0.2587932, y: -0.60223126, z: -0.33633798, w: 0.67618066}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3143608924536474832}
-  m_LocalEulerAnglesHint: {x: -3.18, y: -81.9, z: -45.111}
+  m_LocalEulerAnglesHint: {x: -3.16, y: -81.9, z: -50.15}
+--- !u!1 &1822804703
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1822804704}
+  - component: {fileID: 1822804705}
+  m_Layer: 0
+  m_Name: Right Arm Aim IK
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1822804704
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822804703}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7900307092059883931}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1822804705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822804703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeda7bfbf984f2a4da5ab4b8967b115d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.TwoBoneIKConstraint
+  m_Weight: 0
+  m_Data:
+    m_Root: {fileID: 7168399026819950290}
+    m_Mid: {fileID: 940864363107713453}
+    m_Tip: {fileID: 3183810887515909368}
+    m_Target: {fileID: 446899927}
+    m_Hint: {fileID: 2097039534}
+    m_TargetPositionWeight: 1
+    m_TargetRotationWeight: 1
+    m_HintWeight: 1
+    m_MaintainTargetPositionOffset: 0
+    m_MaintainTargetRotationOffset: 0
 --- !u!1 &1934374352
 GameObject:
   m_ObjectHideFlags: 0
@@ -2784,7 +2844,7 @@ MonoBehaviour:
       m_Item7:
         transform: {fileID: 0}
         weight: 0
-    m_Offset: {x: 75, y: -39.94, z: 0}
+    m_Offset: {x: 46.6, y: -5.2, z: -14}
     m_MinLimit: -180
     m_MaxLimit: 180
     m_AimAxis: 1
@@ -11455,21 +11515,6 @@ Transform:
   - {fileID: 2149429338215608681}
   - {fileID: 3183810887515909368}
   m_Father: {fileID: 7168399026819950290}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &941973392089634845
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4389006571540134215}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7900307092059883931}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &942365148864303675
 Transform:
@@ -38913,23 +38958,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -45.95894, y: 0.30995226, z: -0.18809891}
     m_Extent: {x: 15.226301, y: 7.1173515, z: 9.581354}
   m_DirtyAABB: 0
---- !u!1 &4389006571540134215
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 941973392089634845}
-  - component: {fileID: 7209417318248660114}
-  m_Layer: 0
-  m_Name: SecondHand Grab String
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &4394133302655872994
 GameObject:
   m_ObjectHideFlags: 0
@@ -59403,6 +59431,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
   testAiming: 0
+  shootArrowTest: 0
+  testShotTimer: 1
 --- !u!1 &6766148288241189032
 GameObject:
   m_ObjectHideFlags: 0
@@ -62650,30 +62680,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &7209417318248660114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4389006571540134215}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aeda7bfbf984f2a4da5ab4b8967b115d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.TwoBoneIKConstraint
-  m_Weight: 1
-  m_Data:
-    m_Root: {fileID: 7168399026819950290}
-    m_Mid: {fileID: 940864363107713453}
-    m_Tip: {fileID: 3183810887515909368}
-    m_Target: {fileID: 446899927}
-    m_Hint: {fileID: 2097039534}
-    m_TargetPositionWeight: 1
-    m_TargetRotationWeight: 1
-    m_HintWeight: 1
-    m_MaintainTargetPositionOffset: 0
-    m_MaintainTargetRotationOffset: 0
 --- !u!1 &7210387293792422117
 GameObject:
   m_ObjectHideFlags: 0
@@ -67042,7 +67048,7 @@ MonoBehaviour:
       m_Item7:
         transform: {fileID: 0}
         weight: 0
-    m_Offset: {x: -8.32, y: 110.3, z: -63.6}
+    m_Offset: {x: -20.5, y: 5.94, z: 0}
     m_MinLimit: -180
     m_MaxLimit: 180
     m_AimAxis: 1
@@ -68092,7 +68098,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 429683782}
-  - {fileID: 941973392089634845}
+  - {fileID: 1822804704}
   m_Father: {fileID: 73366873}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7900990852998365554
@@ -68136,7 +68142,7 @@ MonoBehaviour:
       m_Item7:
         transform: {fileID: 0}
         weight: 0
-    m_Offset: {x: 35.15, y: 23.6, z: 13}
+    m_Offset: {x: 5.98, y: 9.57, z: 0}
     m_MinLimit: -180
     m_MaxLimit: 180
     m_AimAxis: 1

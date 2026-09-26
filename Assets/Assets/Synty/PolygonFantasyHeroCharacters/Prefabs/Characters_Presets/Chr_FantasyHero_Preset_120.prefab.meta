@@ -1,12 +1,5 @@
 fileFormatVersion: 2
 guid: a7d563f9ba734624bbd44ff9d206e7ba
-timeCreated: 1555458833
-licenseType: Store
-NativeFormatImporter:
-  mainObjectFileID: 100100000
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
   productId: 143468
@@ -14,3 +7,8 @@ AssetOrigin:
   packageVersion: 1.4.1
   assetPath: Assets/Synty/PolygonFantasyHeroCharacters/Prefabs/Characters_Presets/Chr_FantasyHero_Preset_120.prefab
   uploadId: 976048
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

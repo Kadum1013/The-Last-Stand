@@ -1,12 +1,5 @@
 fileFormatVersion: 2
 guid: 577a666f9d6ed794893e6d29e09bc76b
-timeCreated: 1554786136
-licenseType: Store
-NativeFormatImporter:
-  mainObjectFileID: 100100000
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
   productId: 143468
@@ -14,3 +7,8 @@ AssetOrigin:
   packageVersion: 1.4.1
   assetPath: Assets/Synty/PolygonFantasyHeroCharacters/Prefabs/Weapons/SM_Wep_Dagger_01.prefab
   uploadId: 976048
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

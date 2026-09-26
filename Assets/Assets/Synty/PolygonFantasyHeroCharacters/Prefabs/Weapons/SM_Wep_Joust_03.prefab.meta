@@ -1,12 +1,5 @@
 fileFormatVersion: 2
 guid: f154921f4dd670a4b903eb56e4bd2bdd
-timeCreated: 1554786133
-licenseType: Store
-NativeFormatImporter:
-  mainObjectFileID: 100100000
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
   productId: 143468
@@ -14,3 +7,8 @@ AssetOrigin:
   packageVersion: 1.4.1
   assetPath: Assets/Synty/PolygonFantasyHeroCharacters/Prefabs/Weapons/SM_Wep_Joust_03.prefab
   uploadId: 976048
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

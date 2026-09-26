@@ -1,12 +1,5 @@
 fileFormatVersion: 2
 guid: c84607d7a26eac84ab52511146858b73
-timeCreated: 1554786141
-licenseType: Store
-NativeFormatImporter:
-  mainObjectFileID: 100100000
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
   productId: 143468
@@ -14,3 +7,8 @@ AssetOrigin:
   packageVersion: 1.4.1
   assetPath: Assets/Synty/PolygonFantasyHeroCharacters/Prefabs/Weapons/SM_Wep_Shield_Long_15.prefab
   uploadId: 976048
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -6,6 +6,7 @@ public class CharacterRotation : MonoBehaviour
     [Tooltip(" The LayerMask Ray cast will hit.")]
     [SerializeField] LayerMask layerMask;
 
+    public Transform GetTargetLookAtTransform() { return targetLookAtTransform; }
     [Tooltip("The Transform the camera and player will look at")]
     [SerializeField] Transform targetLookAtTransform;
 

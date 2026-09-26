@@ -17,13 +17,16 @@ public class Bow : MonoBehaviour
     [SerializeField] Transform nockPoint;
     [SerializeField] Transform bowstringAnchorPoint;
 
+    Transform rightHandIKPoint;
+
     [SerializeField] float delay;
     [SerializeField] float duration;
 
     // Rest point for the string when not aiming.
     [SerializeField] Transform nockPointRestPoint;
-    private Vector3 initialLimb01LocalEulerAngles;
-    private Vector3 initialLimb02LocalEulerAngles;
+     private Vector3 initialLimb01LocalEulerAngles;
+     private Vector3 initialLimb02LocalEulerAngles;
+
 
     [SerializeField] Quaternion arrowRestRotationOffset;
     bool isNocked = false;
@@ -64,7 +67,7 @@ public class Bow : MonoBehaviour
     {
         if (!bowstringLine || !tip01 || !tip02 || !nockPoint)
         {
-             return;
+            return;
         }
 
         bowstringLine.positionCount = 3;
@@ -80,32 +83,70 @@ public class Bow : MonoBehaviour
     }
 #endif 
 
+    public void SetRightHandIK(Transform rightHandIKPoint)
+    {
+        this.rightHandIKPoint = rightHandIKPoint;
+    }
 
-    public void LoadArrow(Arrow arrow, Transform rightHandIKPoint)
+    public void LoadArrow(Arrow arrow)
     {
         isNocked = true;
         currentArrow = null;
         currentArrow = arrow;
+
         // Creates arrow and attaches it to the bow
         currentArrow.transform.parent = spawnArrowPos.transform;
         currentArrow.transform.position = spawnArrowPos.transform.position;
         currentArrow.transform.rotation = spawnArrowPos.transform.rotation;
-
-        nockPoint.parent = rightHandIKPoint;
-        nockPoint.position = rightHandIKPoint.position;
     }
-    public void ShootArrow()
+
+    public void SetHoldingBowString(bool holding)
+    {
+       Vector3 bendlimb01 =  new Vector3(
+                initialLimb01LocalEulerAngles.x,
+                initialLimb01LocalEulerAngles.y,
+                initialLimb01LocalEulerAngles.z - 15f);
+       Vector3 bendlimb02 =  new Vector3(
+                initialLimb01LocalEulerAngles.x,
+                initialLimb01LocalEulerAngles.y,
+                initialLimb01LocalEulerAngles.z - 15f);
+
+
+        if (holding)
+        {
+            nockPoint.parent = rightHandIKPoint;
+            nockPoint.position = rightHandIKPoint.position;
+            // Bend the limbs when the string is pulled back
+            limb01.localEulerAngles = Vector3.MoveTowards(limb01.localEulerAngles, bendlimb01, duration);
+
+            limb02.localEulerAngles = Vector3.MoveTowards(limb02.localEulerAngles, bendlimb02, duration);
+        }
+        else
+        {
+            nockPoint.parent = nockPointRestPoint;
+            nockPoint.position = nockPointRestPoint.position;
+            // Reset to resting/unbent rotation
+            limb01.localEulerAngles = initialLimb01LocalEulerAngles;
+            limb02.localEulerAngles = initialLimb02LocalEulerAngles;
+
+        }
+    }
+    public void ShootArrow(Transform lookAt)
     {
         // If there isnt an arrow ready to shoot, skip
         if (currentArrow != null)
         {
             // Detache it from the bow gameobject.
             currentArrow.transform.SetParent(null);
-            nockPoint.parent = nockPointRestPoint;
-            nockPoint.position = nockPointRestPoint.position;
+
+            // Let go of the string
+            SetHoldingBowString(false);
+
+            // The arrow is no longer on nocked (on the bow string)
             isNocked = false;
 
-            currentArrow.ShootArrow();
+            // shoot the arrow before removing it from cache
+            currentArrow.ShootArrow(lookAt);
             currentArrow = null;
         }
     }

@@ -1,6 +1,4 @@
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
@@ -12,18 +10,31 @@ public class RigController : MonoBehaviour
     [SerializeField] TwoBoneIKConstraint rightArmNonAimIK;
 
     [SerializeField] float time;
+    bool setAimRightHandIK;
     bool isAiming = false;
+
+
     private void Update()
     {
         if (isAiming)
         {
             aimRig.weight = Mathf.MoveTowards(aimRig.weight, 1, time * Time.deltaTime);
             nonAimRig.weight = Mathf.MoveTowards(nonAimRig.weight, 0, 1);
+           
         }
         else
-        { 
+        {
             aimRig.weight = Mathf.MoveTowards(aimRig.weight, 0, 1);
             nonAimRig.weight = Mathf.MoveTowards(nonAimRig.weight, 1, time * Time.deltaTime);
+        }
+
+        if (setAimRightHandIK)
+        {
+            rightArmAimIK.weight = 1;
+        }
+        else
+        {
+            rightArmAimIK.weight = 0;
         }
     }
     public void Aiming()
@@ -40,23 +51,21 @@ public class RigController : MonoBehaviour
         if (isMoving)
         {
             rightArmNonAimIK.weight = 0;
+
         }
         else
         {
             rightArmNonAimIK.weight = 1;
         }
     }
-    public void LoadBow()
+    // Set right hand IK to 0
+    public void DisableRightHandIK()
     {
-        StartCoroutine(LoadingBow());
+        setAimRightHandIK = false;
     }
-
-    private IEnumerator LoadingBow()
+    // Set right hand IK to 1
+    public void EnableRightHandIK()
     {
-        yield return new WaitForSeconds(0.1f);
-        rightArmAimIK.weight = 0;
-        yield return new WaitForSeconds(0.5f);
-        rightArmAimIK.weight = 1;
+        setAimRightHandIK = true;
     }
-
 }

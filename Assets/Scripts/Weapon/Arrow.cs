@@ -26,9 +26,10 @@ public class Arrow : MonoBehaviour
         rigidbody.angularVelocity = Vector3.zero;
         rigidbody.linearVelocity = Vector3.zero;
     }
-    public void ShootArrow()
+    public void ShootArrow(Transform lookAt)
     {
-        Vector3 dir = transform.forward;
+        Vector3 dir = lookAt.position - transform.position;
+        dir.Normalize();
         dir.y += upForce;
 
         rigidbody.useGravity = true;

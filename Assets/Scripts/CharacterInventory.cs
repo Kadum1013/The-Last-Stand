@@ -14,30 +14,47 @@ public class CharacterInventory : MonoBehaviour
     [SerializeField] bool bowLoaded = false;
     
     [SerializeField] Transform rightHandPos;
-    public void ShootArrow()
+
+    private void Start()
+    {
+        if (currentBow != null)
+        {
+            currentBow.SetRightHandIK(rightHandPos);
+        }
+    }
+    public void ShootArrow(Transform lookAt)
     {
         if (currentArrowLoaded != null)
         {
-            currentBow.ShootArrow();
+            currentBow.ShootArrow(lookAt);
             bowLoaded = false;
         }
     }
 
-    public void LoadArrow()
+
+    // This sets the bow string to the right hand
+    public void GrabBowString()
     {
-       StartCoroutine(GrabArrowFromQuvier());
+        currentBow.SetHoldingBowString(true);
     }
 
-    private IEnumerator GrabArrowFromQuvier()
+    // This removes the string from the right hand
+    public void ReleaseBowString()
     {
-        if (arrowPrefab != null)
-        {
-            yield return new WaitForSeconds(.5f);
-            currentArrowLoaded = Instantiate(arrowPrefab, rightHandPos.position, Quaternion.identity, rightHandPos);
+        currentBow.SetHoldingBowString(false);
+    }
 
-            yield return new WaitForSeconds(0.1f);
-            currentBow.LoadArrow(currentArrowLoaded, rightHandPos);
-            bowLoaded = true;
-        }
+    // Spawns arrow in the right hand from the Quiver.
+    public void SpawnArrowInRightHand()
+    {
+        if(arrowPrefab == null) { Debug.LogError("You must set the arrow Prefab"); }
+        currentArrowLoaded = Instantiate(arrowPrefab, rightHandPos.position, Quaternion.identity, rightHandPos);
+    }
+    
+    // Sets the arrow to be on the bow string
+    public void SetArrowToBowString()
+    {
+        currentBow.LoadArrow(currentArrowLoaded);
+        bowLoaded = true;
     }
 }

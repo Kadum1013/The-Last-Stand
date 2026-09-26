@@ -14,7 +14,8 @@ public class PlayerStatemachine : StateMachine
     public RigController GetRigController() { return rigController; }
     [SerializeField] RigController rigController;
 
-    public CharacterInventory inventory;
+    public CharacterInventory GetCharacterInventory() { return inventory; }
+    [SerializeField] CharacterInventory inventory;
 
     [Header("Camera controller.")]
     // Controller that handles the cinemachine cameras.
@@ -35,7 +36,31 @@ public class PlayerStatemachine : StateMachine
     {
         SwitchState(new PlayerFreeLookState(this));
     }
-    
+    private void OnEnable()
+    {
+        animator.OnGrabBowString += GrabBowString;
+        animator.OnReleaseBowString += ReleaseBowString;
+        animator.OnSpawnArrow += SpawnArrow;
+        animator.OnSetArrowRightHand += SetArrowToBowString;
+    }
+    private void OnDisable()
+    {
+        animator.OnGrabBowString -= GrabBowString;
+        animator.OnReleaseBowString -= ReleaseBowString;
+        animator.OnSpawnArrow -= SpawnArrow;
+        animator.OnSetArrowRightHand -= SetArrowToBowString;
+    }
+    public void GrabBowString()
+    {
+        rigController.EnableRightHandIK();
+        inventory.GrabBowString();
+    }
+    public void ReleaseBowString()
+    {
+        rigController.DisableRightHandIK();
+        inventory.ReleaseBowString();
+    } 
+
 
     // Character movement.
     public void MoveCharacter()
@@ -82,7 +107,8 @@ public class PlayerStatemachine : StateMachine
     // Try and shoot an arrow.
     public void ShootArrow()
     {
-        inventory.ShootArrow();
+        inventory.ShootArrow(characterRotation.GetTargetLookAtTransform());
+        ReleaseBowString();
         animator.ShootArrow();
         LoadBow();
     }
@@ -90,8 +116,15 @@ public class PlayerStatemachine : StateMachine
     public void LoadBow()
     {
         if (inventory.GetIsBowLoaded()) { return; }
-        rigController.LoadBow();
-        inventory.LoadArrow();
         animator.LoadArrow();
+    }
+
+    private void SpawnArrow()
+    {
+        inventory.SpawnArrowInRightHand();
+    }
+    private void SetArrowToBowString()
+    {
+        inventory.SetArrowToBowString();
     }
 }

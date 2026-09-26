@@ -25,6 +25,8 @@ public class PlayerAimState : PlayerBaseState
     public override void Tick(float deltaTime)
     {
         if(PlayerInput.instance.IsAiming == false) { statemachine.SwitchState(new PlayerFreeLookState(statemachine)); }
+
+        if(PlayerInput.instance.IsDrawingBow == true) { Debug.Log("Draw the bow!"); }
         statemachine.MoveCharacter();
     }
 
