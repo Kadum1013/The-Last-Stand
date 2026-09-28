@@ -366,13 +366,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RigController
   aimRig: {fileID: 8331908779596647522}
   nonAimRig: {fileID: 695721183}
-  aimConstraints:
-  - {fileID: 2091371497}
-  - {fileID: 7777540624550396546}
-  - {fileID: 7900990852998365554}
   rightArmAimIK: {fileID: 1822804705}
   rightArmNonAimIK: {fileID: 763085996}
-  time: 2.8
+  time: 2
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -4933,7 +4929,7 @@ Animator:
   m_GameObject: {fileID: 180739575507511559}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 038320a534bd8b444b43734860d1a211, type: 3}
-  m_Controller: {fileID: 9100000, guid: 255f558460913254a9de6d79a140d3b2, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4179cbbad54f3d0408b3f5a6ff92c72f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -65645,6 +65641,7 @@ MonoBehaviour:
   inventory: {fileID: 7941738554669108552}
   cameraController: {fileID: 3346461045611605373}
   animator: {fileID: 5611237898225799425}
+  bowIsLoaded: 0
   normalMovementSpeed: 10
   aimingMovementSpeed: 5
   reloadSpeed: 1

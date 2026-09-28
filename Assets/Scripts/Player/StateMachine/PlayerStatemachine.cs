@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerStatemachine : StateMachine
@@ -23,9 +24,12 @@ public class PlayerStatemachine : StateMachine
 
     [Header("Character animator controller that handles all animation.")]
     [SerializeField] CharacterAnimationController animator;
+    public CharacterAnimationController GetAnimator() { return animator; }
 
     bool isAiming = false;
 
+    public bool GetBowIsLoaded() { return bowIsLoaded; }
+    [SerializeField] bool bowIsLoaded = false;
     // Character movement speed.
     [SerializeField] float normalMovementSpeed = 10;
     [SerializeField] float aimingMovementSpeed = 10;
@@ -57,6 +61,7 @@ public class PlayerStatemachine : StateMachine
     }
     public void ReleaseBowString()
     {
+
         rigController.DisableRightHandIK();
         inventory.ReleaseBowString();
     } 
@@ -76,14 +81,15 @@ public class PlayerStatemachine : StateMachine
 
     }
 
-    // Player is aiming
-    public void PlayerIsAiming()
+    // Player is drawing the bow back.
+    public void PlayerIsDrawingBow()
     {
         isAiming = true;
-        LoadBow();
         GetCharacterRotation().SetIsAiming(true);
         animator.SetIsAiming(true);
-        cameraController.SetAiming(true);
+        LoadBow();
+        // This will be an ablity you can unlock
+        //cameraController.SetAiming(true);
         if (rigController != null)
         {
             rigController.Aiming();
@@ -97,7 +103,9 @@ public class PlayerStatemachine : StateMachine
         isAiming = false;
         GetCharacterRotation().SetIsAiming(false);
         animator.SetIsAiming(false);
-        cameraController.SetAiming(false);
+
+        //  This will be an ablity you can unlock
+        // cameraController.SetAiming(false);
         if (rigController != null)
         {
             rigController.NotAiming();
@@ -109,16 +117,22 @@ public class PlayerStatemachine : StateMachine
     {
         inventory.ShootArrow(characterRotation.GetTargetLookAtTransform());
         ReleaseBowString();
+        bowIsLoaded = false;
         animator.ShootArrow();
-        LoadBow();
     }
 
     public void LoadBow()
     {
         if (inventory.GetIsBowLoaded()) { return; }
-        animator.LoadArrow();
+            StartCoroutine(LoadArrow());
     }
-
+    IEnumerator LoadArrow()
+    {
+        yield return new WaitForSeconds(0.2f); 
+        animator.LoadArrow();
+        yield return new WaitForSeconds(1.1f);
+        bowIsLoaded = true;
+    }
     private void SpawnArrow()
     {
         inventory.SpawnArrowInRightHand();

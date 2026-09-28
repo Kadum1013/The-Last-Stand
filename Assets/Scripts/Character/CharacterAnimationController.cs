@@ -19,7 +19,8 @@ public class CharacterAnimationController : MonoBehaviour
     public event Action OnGrabBowString; 
     public event Action OnReleaseBowString; 
     public event Action OnSpawnArrow; 
-    public event Action OnSetArrowRightHand; 
+    public event Action OnSetArrowRightHand;
+
 
 
     // Check if character is aiming or not.
@@ -46,8 +47,8 @@ public class CharacterAnimationController : MonoBehaviour
         animator.SetFloat(moveZ, yValue);
     }
 
+    
     public void InvokeOnSpawnArrow() => OnSpawnArrow?.Invoke();
     public void InvokeOnSetArrowRightHand() => OnSetArrowRightHand?.Invoke();
-    public void InvokeOnGrabBowString() => OnGrabBowString?.Invoke(); 
-    public void InvokeOnReleaseBowString() => OnReleaseBowString?.Invoke(); 
+    public void InvokeOnGrabBowString() { OnGrabBowString?.Invoke(); }
 }

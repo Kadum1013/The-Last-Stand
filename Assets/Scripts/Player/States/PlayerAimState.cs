@@ -1,36 +1,47 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerAimState : PlayerBaseState
 {
+    float switchTimer = 0.5f;
+    bool switching = false;
     public PlayerAimState(PlayerStatemachine statemachine) : base(statemachine)
     {
     }
 
     public override void Enter()
     {
-        EventListener.Instance.OnShoot += statemachine.ShootArrow;
-        statemachine.PlayerIsAiming();
+        statemachine.PlayerIsDrawingBow();
     }
 
     public override void Exit()
     {
-        EventListener.Instance.OnShoot -= statemachine.ShootArrow;
+
     }
 
     public override void OnDestroy()
     {
-       
+
     }
 
     public override void Tick(float deltaTime)
     {
-        if(PlayerInput.instance.IsAiming == false) { statemachine.SwitchState(new PlayerFreeLookState(statemachine)); }
+        if (!switching)
+        {
+            // Check if they player has released the attack button and the bow is loaded.
+            if (PlayerInput.instance.IsDrawingBow == false && statemachine.GetBowIsLoaded())
+            {
+                // If player lets go of attack and the bow isnt loaded.
+                // Wait for the bool bow is loaded to shoot the arrow. 
+                // If player trys and holds down the attack again before the bow is loaded
+                // The arrow wont fire, it will be like they never let go of attack.
+                switching = true;
+                statemachine.ShootArrow();
+                statemachine.SwitchState(new PlayerFreeLookState(statemachine));
+            }
 
-        if(PlayerInput.instance.IsDrawingBow == true) { Debug.Log("Draw the bow!"); }
+        }
+
         statemachine.MoveCharacter();
     }
-
-    // If the player shoots the arrow and the player is still in aiming state.
-    // Load a new arrow.
-    // While loading, if the player stops aiming.  leave the arrow on the string.
 }

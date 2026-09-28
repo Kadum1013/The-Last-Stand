@@ -18,14 +18,21 @@ public class RigController : MonoBehaviour
     {
         if (isAiming)
         {
-            aimRig.weight = Mathf.MoveTowards(aimRig.weight, 1, time * Time.deltaTime);
-            nonAimRig.weight = Mathf.MoveTowards(nonAimRig.weight, 0, 1);
-           
+            // If i want it to go slow.
+            //aimRig.weight = Mathf.MoveTowards(aimRig.weight, 1, time * Time.deltaTime);
+            //nonAimRig.weight = Mathf.MoveTowards(nonAimRig.weight, 0, 1);
+
+            // quick change into the weight of the rig
+            aimRig.weight = 1;
+            nonAimRig.weight = 0;
+
         }
         else
         {
-            aimRig.weight = Mathf.MoveTowards(aimRig.weight, 0, 1);
-            nonAimRig.weight = Mathf.MoveTowards(nonAimRig.weight, 1, time * Time.deltaTime);
+            //aimRig.weight = Mathf.MoveTowards(aimRig.weight, 0, 1);
+            //nonAimRig.weight = Mathf.MoveTowards(nonAimRig.weight, 1, time * Time.deltaTime);
+            aimRig.weight = 0;
+            nonAimRig.weight = 1;
         }
 
         if (setAimRightHandIK)

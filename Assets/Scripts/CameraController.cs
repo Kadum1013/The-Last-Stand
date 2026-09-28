@@ -40,6 +40,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
+        SetAiming(false);
     }
 
     private void LateUpdate()
