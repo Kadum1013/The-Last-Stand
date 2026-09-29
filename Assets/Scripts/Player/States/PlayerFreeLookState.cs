@@ -4,6 +4,7 @@ public class PlayerFreeLookState : PlayerBaseState
 {
     // Free looking state.  Non aiming.
     bool alreadySwitchedHolding = false;
+    
     public PlayerFreeLookState(PlayerStatemachine statemachine) : base(statemachine)
     {
     }
@@ -29,8 +30,14 @@ public class PlayerFreeLookState : PlayerBaseState
         // Moves the character
         statemachine.MoveCharacter();
 
+        if (!statemachine.GetAnimator().GetIsBowLoaded())
+        {
+            ReleaseString();
+            return;
+        }
         // Checks if the character is moving. If yes, then turn off right arm IK.
         statemachine.GetRigController().Moving(statemachine.GetCharacterMovement().CheckIfCharacterIsMoving());
+
 
         if (statemachine.GetCharacterMovement().CheckIfCharacterIsMoving())
         {
@@ -46,6 +53,7 @@ public class PlayerFreeLookState : PlayerBaseState
     {
         if (!alreadySwitchedHolding)
         {
+            Debug.Log("Called from free state!");
             statemachine.GrabBowString();
             alreadySwitchedHolding = true;
         }

@@ -47,6 +47,10 @@ public class CharacterMovement : MonoBehaviour
         float moveZ = input.MovementValue.y;
         animator.UpdateAnimationMovement(moveX, moveZ);
 
+        if(moveX > 0f || moveZ > 0f || moveX < 0f || moveZ < 0f)
+        {
+            Debug.Log("Character moving!");
+        }
         // Checks if character is moving.
         isCharacterMoving = moveX > 0f || moveZ > 0f || moveX < 0f || moveZ < 0f;
     }

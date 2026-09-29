@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerStatemachine : StateMachine
 {
     // Character rotation handles the rotation of the player, where to look.
-    public CharacterRotation GetCharacterRotation() {  return characterRotation; }
+    public CharacterRotation GetCharacterRotation() { return characterRotation; }
     [SerializeField] CharacterRotation characterRotation;
 
     // Character Movement, handles character movement and speed.
@@ -28,8 +28,6 @@ public class PlayerStatemachine : StateMachine
 
     bool isAiming = false;
 
-    public bool GetBowIsLoaded() { return bowIsLoaded; }
-    [SerializeField] bool bowIsLoaded = false;
     // Character movement speed.
     [SerializeField] float normalMovementSpeed = 10;
     [SerializeField] float aimingMovementSpeed = 10;
@@ -61,10 +59,9 @@ public class PlayerStatemachine : StateMachine
     }
     public void ReleaseBowString()
     {
-
         rigController.DisableRightHandIK();
         inventory.ReleaseBowString();
-    } 
+    }
 
 
     // Character movement.
@@ -84,6 +81,7 @@ public class PlayerStatemachine : StateMachine
     // Player is drawing the bow back.
     public void PlayerIsDrawingBow()
     {
+        ReleaseBowString();
         isAiming = true;
         GetCharacterRotation().SetIsAiming(true);
         animator.SetIsAiming(true);
@@ -115,23 +113,16 @@ public class PlayerStatemachine : StateMachine
     // Try and shoot an arrow.
     public void ShootArrow()
     {
-        inventory.ShootArrow(characterRotation.GetTargetLookAtTransform());
-        ReleaseBowString();
-        bowIsLoaded = false;
         animator.ShootArrow();
+        // wait to shoot the arrow a little bit longer.
+        // Wait for the shoot animation to finish before getting out of aim state.
+        ReleaseBowString();
+        inventory.ShootArrow(characterRotation.GetTargetLookAtTransform());
     }
-
     public void LoadBow()
     {
         if (inventory.GetIsBowLoaded()) { return; }
-            StartCoroutine(LoadArrow());
-    }
-    IEnumerator LoadArrow()
-    {
-        yield return new WaitForSeconds(0.2f); 
         animator.LoadArrow();
-        yield return new WaitForSeconds(1.1f);
-        bowIsLoaded = true;
     }
     private void SpawnArrow()
     {
