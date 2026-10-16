@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerFreeLookState : PlayerBaseState
@@ -14,6 +15,8 @@ public class PlayerFreeLookState : PlayerBaseState
         statemachine.PlayerFreeLook();
     }
 
+  
+
     public override void Exit()
     {
 
@@ -27,10 +30,11 @@ public class PlayerFreeLookState : PlayerBaseState
     public override void Tick(float deltaTime)
     {
         if (PlayerInput.instance.IsDrawingBow) { statemachine.SwitchState(new PlayerAimState(statemachine)); }
+
         // Moves the character
         statemachine.MoveCharacter();
 
-        if (!statemachine.GetAnimator().GetIsBowLoaded())
+        if (!statemachine.GetAnimator().GetIsBowLoaded)
         {
             ReleaseString();
             return;
@@ -53,7 +57,6 @@ public class PlayerFreeLookState : PlayerBaseState
     {
         if (!alreadySwitchedHolding)
         {
-            Debug.Log("Called from free state!");
             statemachine.GrabBowString();
             alreadySwitchedHolding = true;
         }

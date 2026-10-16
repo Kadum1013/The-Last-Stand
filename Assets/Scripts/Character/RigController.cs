@@ -9,6 +9,7 @@ public class RigController : MonoBehaviour
     [SerializeField] TwoBoneIKConstraint rightArmAimIK;
     [SerializeField] TwoBoneIKConstraint rightArmNonAimIK;
 
+
     [SerializeField] float time;
     bool setAimRightHandIK;
     bool isAiming = false;
@@ -54,7 +55,6 @@ public class RigController : MonoBehaviour
     {
         isAiming = false;
     }
-
     public void Moving(bool isMoving)
     {
         if (isMoving)

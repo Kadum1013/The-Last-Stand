@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 
 public class PlayerInput : MonoBehaviour, InputSystem.IPlayerActions
@@ -15,6 +16,7 @@ public class PlayerInput : MonoBehaviour, InputSystem.IPlayerActions
     [SerializeField] bool testAiming;
     [SerializeField] bool shootArrowTest;
     [SerializeField] float testShotTimer = 1f;
+
     private void Awake()
     {
         if (instance == null)
@@ -43,7 +45,6 @@ public class PlayerInput : MonoBehaviour, InputSystem.IPlayerActions
                 EventListener.Instance.InvokeOnAttack();
                 testShotTimer = 1f;
             }
-
         }
     }
 

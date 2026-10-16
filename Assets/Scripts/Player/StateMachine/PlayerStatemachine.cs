@@ -1,22 +1,27 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class PlayerStatemachine : StateMachine
 {
+    // Crosshair as well as precision ring.
+    public Crosshair GetCrosshair() { return crosshair; }
+    [SerializeField] Crosshair crosshair;
+
     // Character rotation handles the rotation of the player, where to look.
-    public CharacterRotation GetCharacterRotation() { return characterRotation; }
-    [SerializeField] CharacterRotation characterRotation;
+    public PlayerRotation GetCharacterRotation() { return characterRotation; }
+    [SerializeField] PlayerRotation characterRotation;
 
     // Character Movement, handles character movement and speed.
-    public CharacterMovement GetCharacterMovement() { return characterMovement; }
-    [SerializeField] CharacterMovement characterMovement;
+    public PlayerMovement GetCharacterMovement() { return characterMovement; }
+    [SerializeField] PlayerMovement characterMovement;
 
     // Rig controller
     public RigController GetRigController() { return rigController; }
     [SerializeField] RigController rigController;
 
-    public CharacterInventory GetCharacterInventory() { return inventory; }
-    [SerializeField] CharacterInventory inventory;
+    public PlayerInventory GetCharacterInventory() { return inventory; }
+    [SerializeField] PlayerInventory inventory;
 
     [Header("Camera controller.")]
     // Controller that handles the cinemachine cameras.
@@ -26,13 +31,21 @@ public class PlayerStatemachine : StateMachine
     [SerializeField] CharacterAnimationController animator;
     public CharacterAnimationController GetAnimator() { return animator; }
 
+
+    [Header("Players Input System")]
+    [SerializeField] PlayerInput input;
+    public PlayerInput GetPlayerInput => input;
+
+    [Header("Stats")]
+    [SerializeField] Stats stats;
+    public Stats GetStats => stats;
+
     bool isAiming = false;
 
     // Character movement speed.
     [SerializeField] float normalMovementSpeed = 10;
-    [SerializeField] float aimingMovementSpeed = 10;
+    [SerializeField] float aimingMovementSpeed = 5;
 
-    [SerializeField] float reloadSpeed = 1f;
 
     private void Start()
     {
@@ -41,16 +54,23 @@ public class PlayerStatemachine : StateMachine
     private void OnEnable()
     {
         animator.OnGrabBowString += GrabBowString;
-        animator.OnReleaseBowString += ReleaseBowString;
         animator.OnSpawnArrow += SpawnArrow;
         animator.OnSetArrowRightHand += SetArrowToBowString;
+        stats.OnCharacterDied += CharacterDied;
     }
+
+    
+
     private void OnDisable()
     {
         animator.OnGrabBowString -= GrabBowString;
-        animator.OnReleaseBowString -= ReleaseBowString;
         animator.OnSpawnArrow -= SpawnArrow;
         animator.OnSetArrowRightHand -= SetArrowToBowString;
+        stats.OnCharacterDied -= CharacterDied;
+    }
+    private void CharacterDied()
+    {
+        // Switch to death state.
     }
     public void GrabBowString()
     {
@@ -81,11 +101,19 @@ public class PlayerStatemachine : StateMachine
     // Player is drawing the bow back.
     public void PlayerIsDrawingBow()
     {
+        // Release bow string hand IK
         ReleaseBowString();
         isAiming = true;
+        
         GetCharacterRotation().SetIsAiming(true);
+
+        // Sets the draw speed Animation
+        animator.SetDrawSpeed(stats.GetDrawSpeedStat);
         animator.SetIsAiming(true);
+
+        // Load the bow with a new arrow
         LoadBow();
+
         // This will be an ablity you can unlock
         //cameraController.SetAiming(true);
         if (rigController != null)
@@ -114,10 +142,8 @@ public class PlayerStatemachine : StateMachine
     public void ShootArrow()
     {
         animator.ShootArrow();
-        // wait to shoot the arrow a little bit longer.
-        // Wait for the shoot animation to finish before getting out of aim state.
         ReleaseBowString();
-        inventory.ShootArrow(characterRotation.GetTargetLookAtTransform());
+        inventory.ShootArrow(stats.GetDrawPowerStat, characterRotation.GetTargetLookAtTransform(), crosshair.GetPowerMultiplier);
     }
     public void LoadBow()
     {
@@ -132,4 +158,5 @@ public class PlayerStatemachine : StateMachine
     {
         inventory.SetArrowToBowString();
     }
+
 }

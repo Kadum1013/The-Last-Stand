@@ -1,12 +1,21 @@
-using System;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Arrow : MonoBehaviour
 {
     [SerializeField] Rigidbody rigidbody;
-    [SerializeField] float speed;
-    [SerializeField] float upForce;
+    [Tooltip("How much the arrow will go into an object")]
     [SerializeField] float embedDepth = 0.15f;
+    [SerializeField] float baseDmg = 1;
+    [SerializeField] float upForce = 0.1f; // lift at the reference power
+    [SerializeField] float referencePower = 50f;    // draw power where upForce feels right
+    [SerializeField] float liftFalloff = 2f;        // 2 = physically accurate, 1 = gentler change
+    [SerializeField] float maxLiftMultiplier = 4f;  // cap so very weak draws don't lob too high
+    [SerializeField] TrailRenderer trail;
+    int currentDamage;
+
     bool hasHit = false;
     Vector3 flightDirection;
 
@@ -38,6 +47,13 @@ public class Arrow : MonoBehaviour
             target.OnHit(targetZone, this);
         }
 
+        BodyPartCollider bodypartCollider = collision.collider.GetComponent<BodyPartCollider>();
+        if(bodypartCollider != null)
+        {
+            bodypartCollider.Hit(currentDamage);
+        }
+
+
         StickIntoSurface(collision);
     }
 
@@ -63,34 +79,28 @@ public class Arrow : MonoBehaviour
         }
     }
 
-    public void ShootArrow(Transform lookAt)
+    public void ShootArrow(float dmg, float launchPower, Transform lookAt)
     {
+        currentDamage = Mathf.RoundToInt(dmg + baseDmg);
         // Get direction to shoot the arrow
         Vector3 dir = lookAt.position - transform.position;
         dir.Normalize();
 
-        // Add a little up force to it
-        dir.y += upForce;
+        // More lift when the draw is weak, less when it's strong
+        float ratio = referencePower / Mathf.Max(launchPower, 0.01f);
+        float lift = upForce * Mathf.Min(Mathf.Pow(ratio, liftFalloff), maxLiftMultiplier);
+        dir.y += lift;
+        dir.Normalize(); // keeps the lift from changing the arrow's speed
 
+        rigidbody.centerOfMass = new Vector3(0, 0, 0.5f);
         rigidbody.useGravity = true;
-        rigidbody.AddForce(dir * speed, ForceMode.Impulse);
+        rigidbody.AddForce(dir * launchPower, ForceMode.Impulse);
 
-        // Set the flight direction so it knows which direction it is facing
-        // for when it sticks to objects that are really close.
-        flightDirection = dir.normalized;
-        rigidbody.linearVelocity = flightDirection * speed;
+        trail.enabled = true;
 
-        transform.rotation = Quaternion.LookRotation(dir.normalized);
+        flightDirection = dir;
+        transform.rotation = Quaternion.LookRotation(dir);
 
-        // Destory the arrow after a set time.
         Destroy(gameObject, 5f);
-    }
-
-    // Test to make sure the arrows is pointing in the right direction.
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-
-        Gizmos.DrawRay(transform.position, transform.forward * 999);
     }
 }
