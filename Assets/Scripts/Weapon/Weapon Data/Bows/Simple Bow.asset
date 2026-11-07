@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 406ee123d3bffcd4c9a6bca062ec164e, type: 3}
+  m_Name: Simple Bow
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  itemName: Bow
+  itemID: bow01
+  icon: {fileID: 21300000, guid: bfb6bd7e8471f5442bd8e524bdda3380, type: 3}
+  maxStack: 1
+  equipmentType: 0
+  damage: 5
+  attackSpeed: 5
+  prefab: {fileID: 1959652175200966944, guid: 3527ba4bb2913ce4db172c6ce2a59013, type: 3}
+  weaponType: 0
+  combo:
+  - {fileID: 11400000, guid: ea06c97c8deb41d47ae9da6bf162ef69, type: 2}
+  - {fileID: 11400000, guid: 4eb563fc00af85348a7a3980acc2c5aa, type: 2}
+  - {fileID: 11400000, guid: f0700bc93f009e64481468e54d4ad259, type: 2}

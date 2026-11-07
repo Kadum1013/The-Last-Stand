@@ -1,9 +1,10 @@
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private CinemachineCamera aimVirtualCamera;
+    [SerializeField] CinemachineCamera aimCamera;
     [SerializeField] float normalSensitivity;
     [SerializeField] float aimSensitivity;
 
@@ -36,13 +37,28 @@ public class CameraController : MonoBehaviour
     [Tooltip("Top cameras clamp")]
     [SerializeField] float TopClamp = 70.0f;
 
+    [SerializeField] bool isAiming = false;
+    float zoomedIn = 30;
+    float notZoomedIn = 60;
+    [SerializeField] float zoomTime = 5;
+
     private const float _threshold = 0.01f;
     private void Start()
     {
         _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
         SetAiming(false);
     }
-
+    private void Update()
+    {
+        if (isAiming)
+        {
+            aimCamera.Lens.FieldOfView = Mathf.MoveTowards(aimCamera.Lens.FieldOfView, zoomedIn, zoomTime * Time.deltaTime);
+        }
+        else
+        {
+            aimCamera.Lens.FieldOfView = Mathf.MoveTowards(aimCamera.Lens.FieldOfView, notZoomedIn, zoomTime * Time.deltaTime);
+        }
+    }
     private void LateUpdate()
     {
         CameraRotation();
@@ -79,12 +95,12 @@ public class CameraController : MonoBehaviour
     {
         if (isAiming)
         {
-            aimVirtualCamera.gameObject.SetActive(true);
+            this.isAiming = true;
             sensitivity = aimSensitivity;
         }
         else
         {
-            aimVirtualCamera.gameObject.SetActive(false);
+            this.isAiming = false;
             sensitivity = normalSensitivity;
         }
     }

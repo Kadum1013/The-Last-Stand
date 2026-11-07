@@ -20,17 +20,22 @@ public class PlayerStatemachine : StateMachine
     public RigController GetRigController() { return rigController; }
     [SerializeField] RigController rigController;
 
-    public PlayerInventory GetCharacterInventory() { return inventory; }
-    [SerializeField] PlayerInventory inventory;
+    public Inventory GetCharacterInventory() { return inventory; }
+    [SerializeField] Inventory inventory;
 
     [Header("Camera controller.")]
     // Controller that handles the cinemachine cameras.
     [SerializeField] CameraController cameraController;
+    public CameraController GetCameraController() { return cameraController; }
 
     [Header("Character animator controller that handles all animation.")]
     [SerializeField] CharacterAnimationController animator;
     public CharacterAnimationController GetAnimator() { return animator; }
 
+    [SerializeField] AnimatorOverrideController noneWeaponAnimation;
+
+    [Header("Player Hud")]
+    [SerializeField] PlayerHUD playerHUD;
 
     [Header("Players Input System")]
     [SerializeField] PlayerInput input;
@@ -57,9 +62,10 @@ public class PlayerStatemachine : StateMachine
         animator.OnSpawnArrow += SpawnArrow;
         animator.OnSetArrowRightHand += SetArrowToBowString;
         stats.OnCharacterDied += CharacterDied;
+        input.OnScrollWheelAction += CheckWheel;
+        inventory.OnSelectedWeaponUpdate += playerHUD.UpdateSelectedWeapon;
     }
 
-    
 
     private void OnDisable()
     {
@@ -67,8 +73,15 @@ public class PlayerStatemachine : StateMachine
         animator.OnSpawnArrow -= SpawnArrow;
         animator.OnSetArrowRightHand -= SetArrowToBowString;
         stats.OnCharacterDied -= CharacterDied;
+        input.OnScrollWheelAction -= CheckWheel;
+        inventory.OnSelectedWeaponUpdate -= playerHUD.UpdateSelectedWeapon;
     }
-    private void CharacterDied()
+
+    private void CheckWheel(float value)
+    {
+        inventory.CycleWeapons(Mathf.RoundToInt(value));
+    }
+    private void CharacterDied(BodyPart bodyPart, HitImpactDirection hitImpactDirection)
     {
         // Switch to death state.
     }
@@ -83,6 +96,14 @@ public class PlayerStatemachine : StateMachine
         inventory.ReleaseBowString();
     }
 
+    public void TryToEquipWeapon()
+    {
+        AnimatorOverrideController animatorOverride = inventory.TryToEquipWeapon();
+        if (animatorOverride)
+            animator.SwitchAnimatorController(animatorOverride);
+        else
+            animator.SwitchAnimatorController(noneWeaponAnimation);
+    }
 
     // Character movement.
     public void MoveCharacter()
@@ -104,7 +125,7 @@ public class PlayerStatemachine : StateMachine
         // Release bow string hand IK
         ReleaseBowString();
         isAiming = true;
-        
+
         GetCharacterRotation().SetIsAiming(true);
 
         // Sets the draw speed Animation
@@ -128,6 +149,7 @@ public class PlayerStatemachine : StateMachine
     {
         isAiming = false;
         GetCharacterRotation().SetIsAiming(false);
+        animator.ResetLayersToNone();
         animator.SetIsAiming(false);
 
         //  This will be an ablity you can unlock
@@ -141,14 +163,16 @@ public class PlayerStatemachine : StateMachine
     // Try and shoot an arrow.
     public void ShootArrow()
     {
-        animator.ShootArrow();
+        animator.GetAnimator.CrossFadeInFixedTime(inventory.GetCurrentWeaponData.combo[1].clip.name, 0.1f);
         ReleaseBowString();
         inventory.ShootArrow(stats.GetDrawPowerStat, characterRotation.GetTargetLookAtTransform(), crosshair.GetPowerMultiplier);
     }
+
+
     public void LoadBow()
     {
         if (inventory.GetIsBowLoaded()) { return; }
-        animator.LoadArrow();
+         animator.GetAnimator.CrossFadeInFixedTime(inventory.GetCurrentWeaponData.combo[0].clip.name, 0.1f);
     }
     private void SpawnArrow()
     {

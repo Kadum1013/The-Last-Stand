@@ -19,8 +19,11 @@ public class Stats : MonoBehaviour
     float currentAttackSpeed;
     float currentAttackPower;
 
-    public event Action OnCharacterDied;
-    public void InvokeCharacterDied() => OnCharacterDied?.Invoke();
+    public event Action<BodyPart,HitImpactDirection> OnCharacterDied;
+    public event Action<BodyPart, HitImpactDirection> OnCharacterHit;
+    public void InvokeCharacterDied(BodyPart bodyPart,HitImpactDirection hitImpactDirection) => OnCharacterDied?.Invoke(bodyPart, hitImpactDirection);
+    public void InvokeHitCharacter(BodyPart bodyPart,HitImpactDirection hitImpactDirection) => OnCharacterHit?.Invoke(bodyPart, hitImpactDirection);
+
 
     private void Awake()
     {

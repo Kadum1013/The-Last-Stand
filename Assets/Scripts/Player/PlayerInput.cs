@@ -6,6 +6,7 @@ public class PlayerInput : MonoBehaviour, InputSystem.IPlayerActions
 {
     public Vector2 MovementValue { get; private set; }
     public Vector2 MousePosition { get; private set; }
+    public Vector2 ScrollWheelValue { get; private set; }
 
     public bool IsAiming { get; private set; }
     public bool IsDrawingBow { get; private set; }
@@ -13,9 +14,10 @@ public class PlayerInput : MonoBehaviour, InputSystem.IPlayerActions
     InputSystem inputSystem;
     public static PlayerInput instance;
 
-    [SerializeField] bool testAiming;
-    [SerializeField] bool shootArrowTest;
-    [SerializeField] float testShotTimer = 1f;
+
+    public event Action OnPrimartAction;
+    public event Action OnEquipAction;
+    public event Action<float> OnScrollWheelAction;
 
     private void Awake()
     {
@@ -31,22 +33,6 @@ public class PlayerInput : MonoBehaviour, InputSystem.IPlayerActions
         IsAiming = false;
     }
 
-    private void Update()
-    {
-        if (testAiming)
-        {
-            IsAiming = true;
-        }
-        if (shootArrowTest)
-        {
-            testShotTimer -= Time.deltaTime;
-            if (testShotTimer <= 0)
-            {
-                EventListener.Instance.InvokeOnAttack();
-                testShotTimer = 1f;
-            }
-        }
-    }
 
     private void OnEnable()
     {
@@ -58,7 +44,7 @@ public class PlayerInput : MonoBehaviour, InputSystem.IPlayerActions
     public void OnAttack(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         if (!context.performed) { return; }
-        EventListener.Instance.InvokeOnAttack();
+        OnPrimartAction?.Invoke();
     }
 
     public void OnCrouch(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -68,7 +54,8 @@ public class PlayerInput : MonoBehaviour, InputSystem.IPlayerActions
 
     public void OnInteract(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-
+        if (!context.performed) { return; }
+        OnEquipAction?.Invoke();
     }
 
     public void OnJump(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -121,5 +108,12 @@ public class PlayerInput : MonoBehaviour, InputSystem.IPlayerActions
     public void OnAttackHold(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         IsDrawingBow = context.action.IsPressed();
+    }
+
+    public void OnScrollWheel(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+        Vector2 value = context.ReadValue<Vector2>();
+        OnScrollWheelAction?.Invoke(value.y);
     }
 }

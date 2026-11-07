@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d14c11efb7f28fa41b5fbd1c170153b5, type: 3}
+  m_Name: Bow Draw Arrow
+  m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  clip: {fileID: 7400000, guid: 467b591f4385ab644b68cbd1858bfc35, type: 2}
+  damageMultiplier: 1
+  hitStart: 0.25
+  hitEnd: 0.5
+  comboOpen: 0.5
+  comboClose: 0.9
+  lungeDistance: 0

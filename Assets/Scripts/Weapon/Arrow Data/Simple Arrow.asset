@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 792c0a88e56de2544a9351e51e92ba78, type: 3}
+  m_Name: Simple Arrow
+  m_EditorClassIdentifier: Assembly-CSharp::ArrowData
+  itemName: Simple Arrow
+  itemID: 
+  icon: {fileID: 0}
+  maxStack: 9
+  equipmentType: 0
+  arrowPrefab: {fileID: 1225370512109555040, guid: cbc3e4e7ac66ec64390c6122adb2b2d7, type: 3}
+  arrowInstert: {fileID: 6210633188391189873, guid: 50c8a80eca4e3ce4794768ec7858a49a, type: 3}

@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class HitDetector : MonoBehaviour
 {
-    public void Hit(float dmg, BodyPart bodyPart)
+    [SerializeField] Health health;
+    public void Hit(int dmg, BodyPart bodyPart, HitImpactDirection hitImpactDirection)
     {
-        Debug.Log($"Character was hit! Dmg:{dmg}.  Body Part: {bodyPart}");
+        health.TakeDamage(dmg, bodyPart, hitImpactDirection);
     }
 }

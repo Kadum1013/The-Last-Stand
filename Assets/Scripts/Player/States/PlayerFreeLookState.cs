@@ -13,13 +13,16 @@ public class PlayerFreeLookState : PlayerBaseState
     public override void Enter()
     {
         statemachine.PlayerFreeLook();
+        statemachine.GetPlayerInput.OnEquipAction += statemachine.TryToEquipWeapon;
+        statemachine.GetPlayerInput.OnPrimartAction += Attack;
     }
 
-  
+
 
     public override void Exit()
     {
-
+        statemachine.GetPlayerInput.OnEquipAction -= statemachine.TryToEquipWeapon;
+        statemachine.GetPlayerInput.OnPrimartAction -= Attack;
     }
 
     public override void OnDestroy()
@@ -29,7 +32,7 @@ public class PlayerFreeLookState : PlayerBaseState
 
     public override void Tick(float deltaTime)
     {
-        if (PlayerInput.instance.IsDrawingBow) { statemachine.SwitchState(new PlayerAimState(statemachine)); }
+        if (PlayerInput.instance.IsDrawingBow && statemachine.GetCharacterInventory().IsBowEquipped()) { statemachine.SwitchState(new PlayerAimState(statemachine)); }
 
         // Moves the character
         statemachine.MoveCharacter();
@@ -67,6 +70,13 @@ public class PlayerFreeLookState : PlayerBaseState
         {
             statemachine.ReleaseBowString();
             alreadySwitchedHolding = false;
+        }
+    }
+    private void Attack()
+    {
+        if (statemachine.GetCharacterInventory().IsSwordEquipped())
+        {
+            statemachine.SwitchState(new PlayerSwordAttack(statemachine));
         }
     }
 }
